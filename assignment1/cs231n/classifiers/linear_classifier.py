@@ -113,8 +113,8 @@ class LinearClassifier(object):
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        scores = X.dot(W)
-        y_pred = np.max(scores, axis=1)
+        scores = X.dot(self.W)
+        y_pred = np.argmax(scores, axis=1)
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return y_pred
 
