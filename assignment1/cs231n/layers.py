@@ -28,8 +28,14 @@ def affine_forward(x, w, b):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
-
+    shape = np.shape(x)
+    N = shape[0]
+    D = np.prod(shape[1:])
+    x_reshape = np.zeros(shape=(N, D))
+    for i in range(N):
+      x_reshape[i, :] = x[i].reshape(-1)
+    
+    out = x_reshape.dot(w) + b
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
     #                             END OF YOUR CODE                            #
