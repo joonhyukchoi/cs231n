@@ -67,7 +67,13 @@ def affine_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    x_reshape = np.zeros(shape=(N, D))
+    for i in range(N):
+      x_reshape[i, :] = x[i].reshape(-1)
+    dw = np.transpose(x_reshape).dot(dout) 
+    dx_bef_resized = dout.dot(np.transpose(w))
+    dx = dx_bef_resized.reshape(np.shape(x))
+    db = np.sum(dout, axis=0)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -78,7 +84,7 @@ def affine_backward(dout, cache):
 
 def relu_forward(x):
     """
-    Computes the forward pass for a layer of rectified linear units (ReLUs).
+    Computes the forward pass for a layer of ㅎ (ReLUs).
 
     Input:
     - x: Inputs, of any shape
