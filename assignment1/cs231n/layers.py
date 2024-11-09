@@ -785,7 +785,20 @@ def svm_loss(x, y):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    N = x.shape[0]
+    correct_class_scores = x[np.arrange(N), y].reshape(N, 1)
+
+    margins = np.maximum(0,  x - correct_class_scores + 1)
+    margins[np.arange(N), y] = 0
+
+    loss = np.sum(margins) / N
+
+    binary = np.zeros(margins.shape)
+    binary[margins > 0] = 1
+    row_sum = np.sum(binary, axis=1)
+    binary[np.arange(N), y] = -row_sum
+
+    dx = binary / N
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -815,7 +828,17 @@ def softmax_loss(x, y):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    N = x.shape[0]
+    max_scores = np.max(x, axis=1, keepdims=True)
+    x = x - max_scores
+    exp_scores = np.exp(x)
+    sum_exp_scores = np.sum(exp_scores, axis=1, keepdims=True)
+    normalized_scores = exp_scores / sum_exp_scores
+    loss = -np.sum(np.log(normalized_scores[np.arange(N), y])) / N
+    
+    dx = (normalized_scores.copy())
+    dx[np.arange(N), y] -= 1
+    dx = dx / N
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
