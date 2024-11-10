@@ -67,6 +67,9 @@ def affine_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
+    shape = np.shape(x)
+    N = shape[0]
+    D = np.prod(shape[1:])
     x_reshape = np.zeros(shape=(N, D))
     for i in range(N):
       x_reshape[i, :] = x[i].reshape(-1)
@@ -786,7 +789,7 @@ def svm_loss(x, y):
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
     N = x.shape[0]
-    correct_class_scores = x[np.arrange(N), y].reshape(N, 1)
+    correct_class_scores = x[np.arange(N), y].reshape(N, 1)
 
     margins = np.maximum(0,  x - correct_class_scores + 1)
     margins[np.arange(N), y] = 0
